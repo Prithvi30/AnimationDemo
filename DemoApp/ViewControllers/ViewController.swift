@@ -58,21 +58,19 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let itemViewModel = viewModel.itemViewModels[indexPath.row]
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FruitCollectionViewCell", for: indexPath) as? FruitCollectionViewCell else { return UICollectionViewCell() }
-        
         cell.viewModel = itemViewModel
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
-        nextViewController.fruits = viewModel.itemViewModels[indexPath.row]
-        self.present(nextViewController, animated:true, completion:nil)
-        
-        print("tapped")
+        let detailsViewController = storyBoard.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        detailsViewController.fruits = viewModel.itemViewModels[indexPath.row]
+        detailsViewController.modalPresentationStyle = .fullScreen
+        self.present(detailsViewController, animated: true, completion:nil)
     }
 }
 
